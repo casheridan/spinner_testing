@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Spinner_Database-Testing</string>
+    <string name="Spinner_Testing">Spinner Testing</string>
+    <string name="Add_Values">Add Values</string>
+    <string name="Name">Name</string>
+    <string name="Delete_Values">Delete Values</string>
+</resources>

@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "811867811866",
+    "firebase_url": "https://fir-spinner-48f3d.firebaseio.com",
+    "project_id": "fir-spinner-48f3d",
+    "storage_bucket": "fir-spinner-48f3d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:811867811866:android:d05bc29bea17012e",
+        "android_client_info": {
+          "package_name": "com.example.christainsheridan.spinner_database_testing"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "811867811866-3iq3ab6mfmhefil6kr9ool1hst3kmnoi.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.christainsheridan.spinner_database_testing",
+            "certificate_hash": "74adca4c4a5ff042f6d481e023826e7b314e1820"
+          }
+        },
+        {
+          "client_id": "811867811866-b8h2m50p2ah3n211jtl90li0adnjsa88.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCpoRBq5Tu73XBXIzm8_Tm-u149h-BsWws"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "811867811866-b8h2m50p2ah3n211jtl90li0adnjsa88.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
