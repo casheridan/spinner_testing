@@ -26,9 +26,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         final EditText AddBuilding, AddRoom;
         AddBuilding = findViewById(R.id.editText);
         AddRoom = findViewById(R.id.editText2);
+
         final Button AddValues = findViewById(R.id.button);
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -88,12 +90,13 @@ public class MainActivity extends AppCompatActivity {
                 if(AddBuilding.getText().toString().equals("") && AddRoom.getText().toString().equals("")){
                     Toast.makeText(MainActivity.this, "You can't add nothing!", Toast.LENGTH_SHORT).show();
                 }else if (!AddBuilding.getText().toString().equals("") && AddRoom.getText().toString().equals("")){
-                    mDatabaseRoot.child("buildings").push().setValue("building");
-                    mDatabaseRoot.child("buildings").setValue("building");
+                    mDatabaseRoot.child("buildings").push().child("buildingName").setValue(AddBuilding.getText().toString().trim());
+                    AddBuilding.setText("");
                     Toast.makeText(MainActivity.this, "Building Added", Toast.LENGTH_SHORT).show();
                 }else if (AddBuilding.getText().toString().equals("") && !AddRoom.getText().toString().equals("")){
-                    mDatabaseRoot.child("buildings").child("buildingNumber").child("buildingName").setValue(AddRoom);
-                    Toast.makeText(MainActivity.this, "Room Added", Toast.LENGTH_SHORT).show();
+                    mDatabaseRoot.child("rooms").push().child("roomName").setValue(AddRoom.getText().toString().trim());
+                    AddRoom.setText("");
+                    Toast.makeText(MainActivity.this, "Building Added", Toast.LENGTH_SHORT).show();
                 }
             }
         });
