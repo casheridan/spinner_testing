@@ -51,6 +51,8 @@ public class MainActivity extends AppCompatActivity {
                 ArrayAdapter<String> buildingAdapter = new ArrayAdapter<>(MainActivity.this, android.R.layout.simple_spinner_item, buildings);
                 buildingAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 buildingSpinner.setAdapter(buildingAdapter);
+
+
             }
 
             @Override
@@ -87,16 +89,36 @@ public class MainActivity extends AppCompatActivity {
         AddValues.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // If both Building and Room are empty
                 if(AddBuilding.getText().toString().equals("") && AddRoom.getText().toString().equals("")){
+
                     Toast.makeText(MainActivity.this, "You can't add nothing!", Toast.LENGTH_SHORT).show();
-                }else if (!AddBuilding.getText().toString().equals("") && AddRoom.getText().toString().equals("")){
+                }
+                // If both Building and Room is filled
+                else if (!AddBuilding.getText().toString().equals("") && !AddRoom.getText().toString().equals("")){
+
                     mDatabaseRoot.child("buildings").push().child("buildingName").setValue(AddBuilding.getText().toString().trim());
+                    mDatabaseRoot.child("rooms").push().child("roomName").setValue(AddRoom.getText().toString().trim());
+
+                    AddBuilding.setText("");
+                    AddRoom.setText("");
+                    Toast.makeText(MainActivity.this, "Added Building and Room", Toast.LENGTH_SHORT).show();
+                }
+                // If Building is Filled but Room is empty
+                else if (!AddBuilding.getText().toString().equals("") && AddRoom.getText().toString().equals("")){
+
+                    mDatabaseRoot.child("buildings").push().child("buildingName").setValue(AddBuilding.getText().toString().trim());
+
                     AddBuilding.setText("");
                     Toast.makeText(MainActivity.this, "Building Added", Toast.LENGTH_SHORT).show();
-                }else if (AddBuilding.getText().toString().equals("") && !AddRoom.getText().toString().equals("")){
+                }
+                // If Room is filled but Building is empty
+                else if (AddBuilding.getText().toString().equals("") && !AddRoom.getText().toString().equals("")){
+
                     mDatabaseRoot.child("rooms").push().child("roomName").setValue(AddRoom.getText().toString().trim());
+
                     AddRoom.setText("");
-                    Toast.makeText(MainActivity.this, "Building Added", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, "Room Added", Toast.LENGTH_SHORT).show();
                 }
             }
         });
