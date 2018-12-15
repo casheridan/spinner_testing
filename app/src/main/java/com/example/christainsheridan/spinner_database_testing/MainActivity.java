@@ -1,6 +1,8 @@
 package com.example.christainsheridan.spinner_database_testing;
 
+import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,10 +13,13 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuthException;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -32,10 +37,10 @@ public class MainActivity extends AppCompatActivity {
         AddRoom = findViewById(R.id.editText2);
 
         final Button AddValues = findViewById(R.id.button);
+        final Button DeleteValues = findViewById(R.id.button2);
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         final DatabaseReference fDatabaseRoot = database.getReference("");
-
 
         fDatabaseRoot.child("buildings").addValueEventListener(new ValueEventListener() {
             @Override
@@ -97,8 +102,8 @@ public class MainActivity extends AppCompatActivity {
                 // If both Building and Room is filled
                 else if (!AddBuilding.getText().toString().equals("") && !AddRoom.getText().toString().equals("")){
 
-                    mDatabaseRoot.child("buildings").push().child("buildingName").setValue(AddBuilding.getText().toString().trim());
-                    mDatabaseRoot.child("rooms").push().child("roomName").setValue(AddRoom.getText().toString().trim());
+                    mDatabaseRoot.child("buildings").child(AddBuilding.getText().toString().trim()).child("buildingName").setValue(AddBuilding.getText().toString().trim());
+                    mDatabaseRoot.child("rooms").child(AddRoom.getText().toString().trim()).child("roomName").setValue(AddRoom.getText().toString().trim());
 
                     AddBuilding.setText("");
                     AddRoom.setText("");
@@ -107,7 +112,7 @@ public class MainActivity extends AppCompatActivity {
                 // If Building is Filled but Room is empty
                 else if (!AddBuilding.getText().toString().equals("") && AddRoom.getText().toString().equals("")){
 
-                    mDatabaseRoot.child("buildings").push().child("buildingName").setValue(AddBuilding.getText().toString().trim());
+                    mDatabaseRoot.child("buildings").child(AddBuilding.getText().toString().trim()).child("buildingName").setValue(AddBuilding.getText().toString().trim());
 
                     AddBuilding.setText("");
                     Toast.makeText(MainActivity.this, "Building Added", Toast.LENGTH_SHORT).show();
@@ -115,14 +120,49 @@ public class MainActivity extends AppCompatActivity {
                 // If Room is filled but Building is empty
                 else if (AddBuilding.getText().toString().equals("") && !AddRoom.getText().toString().equals("")){
 
-                    mDatabaseRoot.child("rooms").push().child("roomName").setValue(AddRoom.getText().toString().trim());
+                    mDatabaseRoot.child("rooms").child(AddRoom.getText().toString().trim()).child("roomName").setValue(AddRoom.getText().toString().trim());
 
                     AddRoom.setText("");
                     Toast.makeText(MainActivity.this, "Room Added", Toast.LENGTH_SHORT).show();
                 }
             }
         });
+
+        DeleteValues.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // If both Building and Room are empty
+                if(AddBuilding.getText().toString().equals("") && AddRoom.getText().toString().equals("")){
+
+                    Toast.makeText(MainActivity.this, "You can't delete nothing!", Toast.LENGTH_SHORT).show();
+                }
+                // If both Building and Room is filled
+                else if (!AddBuilding.getText().toString().equals("") && !AddRoom.getText().toString().equals("")){
+
+                    fDatabaseRoot.child("buildings").child(AddBuilding.getText().toString().trim()).child("buildingName").removeValue();
+                    fDatabaseRoot.child("rooms").child(AddRoom.getText().toString().trim()).child("roomName").removeValue();
+
+                    AddBuilding.setText("");
+                    AddRoom.setText("");
+                    Toast.makeText(MainActivity.this, "Deleted Building and Room", Toast.LENGTH_SHORT).show();
+                }
+                // If Building is Filled but Room is empty
+                else if (!AddBuilding.getText().toString().equals("") && AddRoom.getText().toString().equals("")){
+
+                    fDatabaseRoot.child("buildings").child(AddBuilding.getText().toString().trim()).child("buildingName").removeValue();
+
+                    AddBuilding.setText("");
+                    Toast.makeText(MainActivity.this, "Building Deleted", Toast.LENGTH_SHORT).show();
+                }
+                // If Room is filled but Building is empty
+                else if (AddBuilding.getText().toString().equals("") && !AddRoom.getText().toString().equals("")){
+
+                    fDatabaseRoot.child("rooms").child(AddRoom.getText().toString().trim()).child("roomName").removeValue();
+
+                    AddRoom.setText("");
+                    Toast.makeText(MainActivity.this, "Room Deleted", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
-
-
 }
