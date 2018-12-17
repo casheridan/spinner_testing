@@ -32,16 +32,20 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // References to the editText field in the layout
         final EditText AddBuilding, AddRoom;
         AddBuilding = findViewById(R.id.editText);
         AddRoom = findViewById(R.id.editText2);
 
+        // Buttons for Add/Delete Values
         final Button AddValues = findViewById(R.id.button);
         final Button DeleteValues = findViewById(R.id.button2);
 
+        // References to the Database
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         final DatabaseReference fDatabaseRoot = database.getReference("");
 
+        // Looking for the Buildings and displaying it in the spinner
         fDatabaseRoot.child("buildings").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -66,6 +70,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        // Looking for the Rooms and displaying it in the spinner
         fDatabaseRoot.child("rooms").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -88,9 +93,11 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        // Reference to the Database
         final FirebaseDatabase uDatabase = FirebaseDatabase.getInstance();
         final DatabaseReference mDatabaseRoot = uDatabase.getReference("");
 
+        // Adding Values to the Database
         AddValues.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -128,6 +135,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        // Removing Values from the Database
         DeleteValues.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
